@@ -120,6 +120,15 @@
   <data name="Add Brand" xml:space="preserve">
     <value>Ajouter une marque</value>
   </data>
+  <data name="Add Command" xml:space="preserve">
+    <value>Ajouter une commande</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Client Name" xml:space="preserve">
+    <value>Nom du client</value>
+  </data>
   <data name="Brand Saved" xml:space="preserve">
     <value>Marque enregistrée !</value>
   </data>
@@ -149,5 +158,8 @@
   </data>
   <data name="Update Brand" xml:space="preserve">
     <value>Édition d'une marque</value>
+  </data>
+	<data name="Update Command" xml:space="preserve">
+    <value>Édition d'une commande</value>
   </data>
 </root>

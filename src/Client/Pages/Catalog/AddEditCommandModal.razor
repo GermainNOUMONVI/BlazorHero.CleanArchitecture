@@ -1,0 +1,102 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<AddEditCommandModal> _localizer
+
+<EditForm Model="@AddEditCommandModel" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @{
+                if (AddEditCommandModel.Command.Id == 0)
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                        @_localizer["Add Command"]
+                    </MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+                        @_localizer["Update Command"]
+                    </MudText>
+                }
+            }
+        </TitleContent> 
+        <DialogContent>
+            <MudGrid>
+                @if (AddEditCommandModel.Command.Id != 0)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudTextField Disabled For="@(() => AddEditCommandModel.Command.Id)" @bind-Value="AddEditCommandModel.Command.Id" Label="@_localizer["Id"]" />
+                    </MudItem> 
+                }
+                <MudItem xs="6">
+                    <MudTextField T="string" Required For="@(() => NewClient.FirstName)" @bind-Value="@NewClient.FirstName" Label="@_localizer["Firstname"]" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudTextField T="string" Required For="@(() => NewClient.LastName)" @bind-Value="NewClient.LastName" Label="@_localizer["Lastname"]" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField Required For="@(() => AddEditCommandModel.Command.DeliveryAddress)" @bind-Value="AddEditCommandModel.Command.DeliveryAddress" Label="@_localizer["Address"]" />
+                </MudItem>
+                <MudItem xs="8">
+                    <MudTextField Required For="@(() => Email)" @bind-Value="Email" Label="@_localizer["Email"]" />
+                </MudItem>
+                <MudItem xs="4">
+                    <MudTextField Required For="@(() => NewClient.PhoneNumber)" @bind-Value="NewClient.PhoneNumber" Label="@_localizer["Tel"]" />
+                </MudItem>
+                @if(AddEditCommandModel.CommandDetails.Count() > 0)
+                {
+                    <MudGrid Style="padding-bottom:5px">
+                        <MudItem xs="3"></MudItem>
+                        <MudItem xs="5">
+                            <MudText>@_localizer["Article"]</MudText>
+                        </MudItem>
+                        <MudItem xs="1">
+                            <MudText>@_localizer["Quantity"]</MudText>
+                        </MudItem>
+                        <MudItem xs="1"></MudItem>
+                        <MudItem xs="1">Supprimer</MudItem>
+                    </MudGrid>
+                }
+                <MudList Style="width:100%;">
+                    @foreach (var detail in AddEditCommandModel.CommandDetails)
+                    {
+                        <MudListItem Style="margin:0px; padding:0px">
+                            <MudGrid>
+                                <MudItem xs="3">
+                                    <MudAvatar Square="true" Style="height:35px; width:35px;" Image="@detail.ImageDataURL"></MudAvatar>
+                                </MudItem>
+                                <MudItem xs="5" Style="align-content:center">
+                                    <MudText>@detail.ProductName</MudText>
+                                </MudItem>
+                                <MudItem xs="1" Style="display:flex; align-items:center">
+                                    <MudTextField Style="padding:0px; margin:0px; font-size:15px; height:10px" T="int" For="@(() => detail.Quantity)" @bind-Value="detail.Quantity" />
+                                </MudItem>
+                                <MudItem xs="2" Style="display:flex; align-items:center">
+                                    <MudIconButton Style="padding:0px" Size="Size.Small" OnClick="@(()=>AddQuantity(detail))"><MudIcon Style="margin:0px" Size="Size.Small" Icon="@Icons.Material.Filled.Add" /></MudIconButton>
+                                    <MudIconButton Style="padding:0px" Size="Size.Small" OnClick="@(()=> DecreaseQuantity(detail) )"><MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Remove" /></MudIconButton>
+                                </MudItem>
+                                <MudItem xs="1" Style="display:flex;align-items:center">
+                                    <MudIconButton Style="padding:0px" Size="Size.Small"><MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Close" /></MudIconButton>
+                                </MudItem>
+                            </MudGrid>
+                        </MudListItem>
+                        <MudDivider Style="padding:0px; margin:0px" />
+                    }
+                </MudList>
+            </MudGrid>
+        </DialogContent> 
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+            @if (IsAlreadyClient)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Secondary">@_localizer["Update"]</MudButton>
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Save"]</MudButton>
+            }
+        </DialogActions>  
+    </MudDialog>
+</EditForm>
+ 

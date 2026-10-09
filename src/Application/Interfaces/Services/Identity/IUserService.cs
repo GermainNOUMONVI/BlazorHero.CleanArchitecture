@@ -14,6 +14,7 @@ namespace BlazorHero.CleanArchitecture.Application.Interfaces.Services.Identity
         Task<int> GetCountAsync();
 
         Task<IResult<UserResponse>> GetAsync(string userId);
+        Task<IResult<UserResponse>> GetByEmailAsync(string email);
 
         Task<IResult> RegisterAsync(RegisterRequest request, string origin);
 

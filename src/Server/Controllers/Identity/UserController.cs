@@ -43,6 +43,13 @@ namespace BlazorHero.CleanArchitecture.Server.Controllers.Identity
             var user = await _userService.GetAsync(id);
             return Ok(user);
         }
+        
+        [HttpGet("email/{email}")]
+        public async Task<IActionResult> GetByEmail(string email)
+        {
+            var user = await _userService.GetByEmailAsync(email);
+            return Ok(user);
+        }
 
         /// <summary>
         /// Get User Roles By Id

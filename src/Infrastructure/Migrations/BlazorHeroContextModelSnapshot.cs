@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(BlazorHeroContext))]
@@ -15,16 +17,18 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.6")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("BlazorHero.CleanArchitecture.Application.Models.Chat.ChatHistory<BlazorHero.CleanArchitecture.Infrastructure.Models.Identity.BlazorHeroUser>", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -44,18 +48,19 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("ToUserId");
 
-                    b.ToTable("ChatHistory");
+                    b.ToTable("ChatHistory", (string)null);
                 });
 
             modelBuilder.Entity("BlazorHero.CleanArchitecture.Domain.Entities.Catalog.Brand", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -64,7 +69,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime2");
@@ -80,12 +85,88 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                     b.ToTable("Brands");
                 });
 
+            modelBuilder.Entity("BlazorHero.CleanArchitecture.Domain.Entities.Catalog.Command", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClientEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeliveryAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Commands");
+                });
+
+            modelBuilder.Entity("BlazorHero.CleanArchitecture.Domain.Entities.Catalog.CommandDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CommandId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommandId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CommandDetails");
+                });
+
             modelBuilder.Entity("BlazorHero.CleanArchitecture.Domain.Entities.Catalog.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Barcode")
                         .HasColumnType("nvarchar(max)");
@@ -94,7 +175,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -106,7 +187,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime2");
@@ -128,11 +209,12 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -166,7 +248,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime2");
@@ -188,11 +270,12 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -207,7 +290,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime2");
@@ -229,11 +312,12 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -242,7 +326,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime2");
@@ -259,8 +343,9 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AffectedColumns")
                         .HasColumnType("nvarchar(max)");
@@ -301,7 +386,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -310,7 +395,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime2");
@@ -337,8 +422,9 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -347,7 +433,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -359,7 +445,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime2");
@@ -389,7 +475,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -414,7 +500,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime2");
@@ -481,8 +567,9 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -572,6 +659,25 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                     b.Navigation("ToUser");
                 });
 
+            modelBuilder.Entity("BlazorHero.CleanArchitecture.Domain.Entities.Catalog.CommandDetails", b =>
+                {
+                    b.HasOne("BlazorHero.CleanArchitecture.Domain.Entities.Catalog.Command", "Command")
+                        .WithMany("Details")
+                        .HasForeignKey("CommandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlazorHero.CleanArchitecture.Domain.Entities.Catalog.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Command");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("BlazorHero.CleanArchitecture.Domain.Entities.Catalog.Product", b =>
                 {
                     b.HasOne("BlazorHero.CleanArchitecture.Domain.Entities.Catalog.Brand", "Brand")
@@ -656,6 +762,11 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BlazorHero.CleanArchitecture.Domain.Entities.Catalog.Command", b =>
+                {
+                    b.Navigation("Details");
                 });
 
             modelBuilder.Entity("BlazorHero.CleanArchitecture.Domain.Entities.Misc.Document", b =>

@@ -56,7 +56,7 @@ else
             <MudTh Style="text-align:right">@_localizer["Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="Id">@context.Id</MudTd>
+            @* <MudTd DataLabel="Id">@context.Id</MudTd>
             <MudTd DataLabel="Name">
                 <MudHighlighter Text="@context.Name" HighlightedText="@_searchString" />
             </MudTd>
@@ -89,7 +89,7 @@ else
                         @_localizer["No Allowed Actions"]
                     </MudButton>
                 }
-            </MudTd>
+            </MudTd> *@
         </RowTemplate>
         <FooterContent>
             <MudSwitch @bind-Checked="@_dense" Color="Color.Secondary" Style="margin-left: 5px;">@_localizer["Dense"]</MudSwitch>

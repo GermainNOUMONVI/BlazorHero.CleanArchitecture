@@ -137,6 +137,13 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Services.Identity
             var result = _mapper.Map<UserResponse>(user);
             return await Result<UserResponse>.SuccessAsync(result);
         }
+        
+        public async Task<IResult<UserResponse>> GetByEmailAsync(string email)
+        {
+            var user = await _userManager.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
+            var result = _mapper.Map<UserResponse>(user);
+            return await Result<UserResponse>.SuccessAsync(result);
+        }
 
         public async Task<IResult> ToggleUserStatusAsync(ToggleUserStatusRequest request)
         {

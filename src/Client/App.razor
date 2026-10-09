@@ -6,6 +6,12 @@
                     <Login />
                 </NotAuthorized>
             </AuthorizeRouteView>
+            <AuthorizeRouteView RouteData="@routeData">
+                <NotAuthorized>
+                    <Login />
+                </NotAuthorized>
+            </AuthorizeRouteView>
+            <RouteView/>
         </Found>
         <NotFound>
             <CascadingAuthenticationState>

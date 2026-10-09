@@ -1,0 +1,30 @@
+﻿@page "/blazorhero/products"
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Products> _localizer
+
+<h3>Products</h3>
+
+<MudAppBar>
+    <MudText Typo="Typo.h6">@_localizer["Trouver votre produit"]</MudText>
+    <MudSpacer/>
+    <MudBadge Content="@_basket.Count()" Overlap="true" Style="margin:0px;padding:0px;"> <MudIconButton Size="Size.Small" OnClick="@(()=>InvokeModal())"> <MudIcon Style="padding:0px; margin:0px; color:white" Size="Size.Medium" Icon="@Icons.Material.Filled.AddShoppingCart" /> </MudIconButton> </MudBadge>
+</MudAppBar>
+
+<HeroTitle Title="@_localizer["Products"]" Description="@_localizer["Add to your basket"]" />
+
+<MudGrid>
+    @foreach(var product in _productList)
+    {
+        <MudItem xs="3">
+            <MudCard Elevation="5">
+                @* <MudCardMedia Height="250" Image="https://localhost:44390/Files/Images/Products/P-58D00FEGG49993.jpg" /> *@
+                <MudAvatar Image="@product.ImageDataURL" Square="true" Style="height:200px; width:100%"></MudAvatar>
+                <MudCardContent Style="padding:5px">
+                    <MudText Style="font-weight:bolder" Typo="Typo.h6">@product.Name</MudText>
+                </MudCardContent>
+                <MudCardActions Style="padding:0;">
+                    <MudButton FullWidth Style="border-radius:0" Color="Color.Warning" OnClick="@(() => AddToBasket(product))" StartIcon="@Icons.Material.Filled.AddShoppingCart" Variant="Variant.Filled">Add To basket</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>   
+    }
+</MudGrid>

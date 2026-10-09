@@ -1,8 +1,10 @@
 ﻿using BlazorHero.CleanArchitecture.Application.Features.Products.Commands.AddEdit;
 using BlazorHero.CleanArchitecture.Application.Features.Products.Queries.GetAllPaged;
+using BlazorHero.CleanArchitecture.Application.Features.Products.Queries.GetAllProduct;
 using BlazorHero.CleanArchitecture.Application.Requests.Catalog;
 using BlazorHero.CleanArchitecture.Client.Infrastructure.Extensions;
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -42,6 +44,13 @@ namespace BlazorHero.CleanArchitecture.Client.Infrastructure.Managers.Catalog.Pr
         {
             var response = await _httpClient.GetAsync(Routes.ProductsEndpoints.GetAllPaged(request.PageNumber, request.PageSize, request.SearchString, request.Orderby));
             return await response.ToPaginatedResult<GetAllPagedProductsResponse>();
+        }
+
+        public async Task<IResult<List<GetAllProductResponse>>> GetProductsAsync()
+        {
+            var response = await _httpClient.GetAsync(Routes.ProductsEndpoints.GetAllProductCustomerPage);
+            var result =  await response.ToResult<List<GetAllProductResponse>>();
+            return result;
         }
 
         public async Task<IResult<int>> SaveAsync(AddEditProductCommand request)

@@ -17,6 +17,7 @@ namespace BlazorHero.CleanArchitecture.Client.Infrastructure.Routes
             }
             return url;
         }
+        public static string GetAllProductCustomerPage = "api/v1/products/allproducts";
 
         public static string GetCount = "api/v1/products/count";
 
